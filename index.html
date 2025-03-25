@@ -24,6 +24,7 @@
       margin: 0 auto;
       background-color: #fffafc;
       border: 4px solid #ff69b4;
+      touch-action: none;
     }
     #message {
       display: none;
@@ -120,13 +121,28 @@
     setInterval(spawnHeart, 1000);
     gameLoop();
 
-    // Touch controls for phones
+    // Touch-to-move
     canvas.addEventListener("touchstart", function (e) {
       const touchX = e.touches[0].clientX - canvas.getBoundingClientRect().left;
       basket.x = touchX - basket.width / 2;
     });
 
-    // Mouse drag support for desktop
+    // Swipe detection
+    let touchStartX = null;
+    canvas.addEventListener("touchstart", (e) => {
+      touchStartX = e.touches[0].clientX;
+    });
+
+    canvas.addEventListener("touchend", (e) => {
+      const touchEndX = e.changedTouches[0].clientX;
+      const diffX = touchEndX - touchStartX;
+      if (Math.abs(diffX) > 30) {
+        if (diffX > 0) basket.x += 30;
+        else basket.x -= 30;
+      }
+    });
+
+    // Mouse drag
     canvas.addEventListener("mousemove", function (e) {
       const mouseX = e.clientX - canvas.getBoundingClientRect().left;
       basket.x = mouseX - basket.width / 2;
