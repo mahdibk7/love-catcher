@@ -82,7 +82,7 @@
 
     function updateHearts() {
       for (let i = 0; i < hearts.length; i++) {
-        hearts[i].y += 3;
+        hearts[i].y += 5;
 
         // Collision with basket
         if (
@@ -137,8 +137,8 @@
       const touchEndX = e.changedTouches[0].clientX;
       const diffX = touchEndX - touchStartX;
       if (Math.abs(diffX) > 30) {
-        if (diffX > 0) basket.x += 30;
-        else basket.x -= 30;
+        if (diffX > 0) basket.x += 50;
+        else basket.x -= 50;
       }
     });
 
